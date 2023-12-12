@@ -50,7 +50,7 @@ if page == pages[0]:
     st.divider()
     st.write("Afin d'obtenir un constat solide, nous nous sommes posé les questions suivantes :")
     with st.container(border=True):
-        st.image("/Users/alexisjover/Desktop/DataScientest/Projet températures terrestres/Streamlit/Questions.png")
+        st.image("/workspaces/Streamlit/Projet températures terrestres/Streamlit/Questions.png")
     
 # PAGE 2 DONNEES ET PROCESSING
 if page == pages[1]:
@@ -72,16 +72,16 @@ latitude et par longitude,
     col1, col2 = st.columns(2)
     with col1:
         with st.container(border=True):
-            st.image("/Users/alexisjover/Desktop/DataScientest/Projet températures terrestres/Streamlit/Capture d’écran 2023-12-09 à 23.16.23.png")
+            st.image("/workspaces/Streamlit/Projet températures terrestres/Streamlit/Capture d’écran 2023-12-09 à 23.16.23.png")
     with col2:
         with st.container(border=True):
-            st.image("/Users/alexisjover/Desktop/DataScientest/Projet températures terrestres/Streamlit/Capture d’écran 2023-12-09 à 23.16.35.png")
+            st.image("/workspaces/Streamlit/Projet températures terrestres/Streamlit/Capture d’écran 2023-12-09 à 23.16.35.png")
     st.divider()
     st.header("Traitement des données")
     st.write("""Le traitement des données a consisté en un processus en 7 étapes pour nettoyer et préparer les données à leur utilisation. Ces
 actions ont été réalisées à l’identique pour tous les fichiers utilisés.""")
     with st.container(border=True):
-        st.image("/Users/alexisjover/Desktop/DataScientest/Projet températures terrestres/Streamlit/Capture d’écran 2023-12-09 à 23.19.42.png", caption = "Étapes du traitement des données")
+        st.image("/workspaces/Streamlit/Projet températures terrestres/Streamlit/Capture d’écran 2023-12-09 à 23.19.42.png", caption = "Étapes du traitement des données")
 
 # PAGE 3 DATAVIZ ------------------------------------------------------------------------------------------------------------------------------------------------------------
 if page == pages[2]:
@@ -92,7 +92,7 @@ if page == pages[2]:
         st.divider()
         st.header("Le réchauffement climatique est-il une réalité actuelle?")
         st.divider()
-        df1 = pd.read_csv("/Users/alexisjover/Desktop/DataScientest/Projet températures terrestres/Streamlit/GLB.Ts+dSST.csv", skiprows = 1)
+        df1 = pd.read_csv("/workspaces/Streamlit/Projet températures terrestres/Streamlit/GLB.Ts+dSST.csv", skiprows = 1)
         df1 = df1.set_index("Year")
         df_courbes = df1[["DJF", "MAM", "JJA", "SON"]].stack().reset_index() # Préparation du dataframe pour avoir trois colonnes.
         df_courbes.columns = ["Année", "Saisons", "Températures"] # Definition des colonnes
@@ -101,7 +101,7 @@ if page == pages[2]:
         df_courbes = df_courbes.replace(to_replace = ["DJF", "MAM", "JJA", "SON"], value = ["Hiver", "Printemps", "Eté", "Automne"]) # Renommage
         df_courbes["Températures"] = df_courbes["Températures"].rolling(4).mean() # Afin de lisser la courbe
 
-        df_zon = pd.read_csv("/Users/alexisjover/Desktop/DataScientest/Projet températures terrestres/Streamlit/ZonAnn.Ts+dSST.csv", index_col = 0)
+        df_zon = pd.read_csv("/workspaces/Streamlit/Projet températures terrestres/Streamlit/ZonAnn.Ts+dSST.csv", index_col = 0)
 
         # Plotly
         fig = px.line(df_courbes[(df_courbes.Saisons == "Eté") | (df_courbes.Saisons == "Hiver")], x='Année', y='Températures', color = "Saisons", line_shape="spline",
@@ -133,12 +133,12 @@ if page == pages[2]:
         st.header("La hausse des températures est-elle circonscrite à une zone géographique?")
         col1, col2 = st.columns(2)
         with col1:
-            df_NHGRAPH = pd.read_csv("/Users/alexisjover/Desktop/DataScientest/Projet températures terrestres/Streamlit/df_NHGRAPH.csv")
+            df_NHGRAPH = pd.read_csv("/workspaces/Streamlit/Projet températures terrestres/Streamlit/df_NHGRAPH.csv")
             fig1 = px.line(df_NHGRAPH, x='Année', y='Températures', color = "Saisons", title="Evolution des températures dans l'hémisphère nord par saison", labels=dict(Températures = "Anomalies de températures"), color_discrete_map={'Eté':'red','Hiver':'blue'}, range_y = [-1, 2], line_shape="spline")
             with st.container(border=True):
                 st.plotly_chart(fig1, use_container_width=True)
         with col2:
-            df_HSGRAPH = pd.read_csv("/Users/alexisjover/Desktop/DataScientest/Projet températures terrestres/Streamlit/df_HSGRAPH.csv")
+            df_HSGRAPH = pd.read_csv("/workspaces/Streamlit/Projet températures terrestres/Streamlit/df_HSGRAPH.csv")
             fig2 = px.line(df_HSGRAPH, x='Année', y='Températures', color = "Saisons", title="Évolution des températures dans l'hémisphère sud par saison",
                  labels=dict(Températures = "Anomalies de températures"),              color_discrete_map={
                                  'Eté':'red',
@@ -148,7 +148,7 @@ if page == pages[2]:
         st.write("""Dans l’Hémisphères Nord, les températures semblent à la hausse en hiver comme en été, avec des pics d’anomalies dès 1900, puis dans les années 1920 et les année 1940. Aussi à partir des années 1980, l’élévation de la température terrestre grimpe significativement.
                 \nDans l’Hémisphère Sud, le début de l’élévation de la température terrestre est décalé, plus tardif par rapport à l’Hémisphère Nord avec un pic qui s’amorce à compter de 1940. """)
         st.divider()
-        df_ZonGRAPH = pd.read_csv("/Users/alexisjover/Desktop/DataScientest/Projet températures terrestres/Streamlit/df_ZonGRAPH.csv")
+        df_ZonGRAPH = pd.read_csv("/workspaces/Streamlit/Projet températures terrestres/Streamlit/df_ZonGRAPH.csv")
         df_ZonGRAPH["Lattitudes"] = df_ZonGRAPH["Lattitudes"].replace(to_replace=["44N-64N","24N-44N","EQU-24N"], value=["Amérique du Nord, Europe, Asie (44N-64N)","Afrique du Nord, Moyen-Orient, Amérique centrale, Europe du Sud, Asie du Sud (24N-44N)","Afrique (EQU-24N)"])
         zones = list(df_ZonGRAPH.Lattitudes.unique())
         zone = st.selectbox(label = "Choix de la zone Géographique", options = zones)
@@ -170,7 +170,7 @@ if page == pages[2]:
         # PIB GLOBAL ---------------------------------------------------------------------
         st.header("Existe-t-il un lien entre la hausse des températures et le développement industriel?")
         st.write("Le PIB connaît également une hausse significative notamment à partir des années 1950. L’évolution du PIB suit la même tendance que celle de la température terrestre.")
-        df_co2 = pd.read_csv("/Users/alexisjover/Desktop/DataScientest/Projet températures terrestres/Streamlit/OWID.csv")
+        df_co2 = pd.read_csv("/workspaces/Streamlit/Projet températures terrestres/Streamlit/OWID.csv")
         gdp_global = df_co2.groupby("year")["gdp"].sum().reset_index() # Préparation DF
         fig = px.line(
             gdp_global,
@@ -617,7 +617,7 @@ if page == pages[2]:
         if option == "Températures - PIB":
             st.divider()
             st.header("Corrélation entre les températures et le PIB")
-            df_corr_temp_pib = pd.read_csv("/Users/alexisjover/Desktop/DataScientest/Projet températures terrestres/Streamlit/corr_temp_pib")
+            df_corr_temp_pib = pd.read_csv("/workspaces/Streamlit/Projet températures terrestres/Streamlit/corr_temp_pib")
             test_p = pearsonr(x = df_corr_temp_pib["gdp"], y = df_corr_temp_pib["temp"])
             fig = px.scatter(
                 df_corr_temp_pib,
@@ -635,7 +635,7 @@ if page == pages[2]:
         if option == "PIB - CO2":
             st.divider()
             st.header("Corrélation entre le PIB et le CO2")
-            df_corr_co2_pib = pd.read_csv("/Users/alexisjover/Desktop/DataScientest/Projet températures terrestres/Streamlit/corr_co2_PIB.csv")
+            df_corr_co2_pib = pd.read_csv("/workspaces/Streamlit/Projet températures terrestres/Streamlit/corr_co2_PIB.csv")
             test_p = pearsonr(x = df_corr_co2_pib["co2"], y = df_corr_co2_pib["gdp"]) # Calcul Pearson
             fig = px.scatter(
                 df_corr_co2_pib,
@@ -653,7 +653,7 @@ if page == pages[2]:
         if option == "CO2 - Températures":
             st.divider()
             st.header("Corrélation entre les températures et le CO2")
-            df_corr_co2_temp = pd.read_csv("/Users/alexisjover/Desktop/DataScientest/Projet températures terrestres/Streamlit/corr_CO2_TEMP.csv")
+            df_corr_co2_temp = pd.read_csv("/workspaces/Streamlit/Projet températures terrestres/Streamlit/corr_CO2_TEMP.csv")
             test_p = pearsonr(x = df_corr_co2_temp["co2"], y = df_corr_co2_temp["temp"]) # Calcul de corrélation Pearson.
             fig = px.scatter(
                 df_corr_co2_temp,
@@ -672,9 +672,9 @@ if page == pages[2]:
 if page == pages[3]:
 
     # TEMPERATURES
-    regressor = load("/Users/alexisjover/Desktop/DataScientest/Projet températures terrestres/Streamlit/Regression_lineaire_temp.joblib")
-    df_plotly = pd.read_csv("/Users/alexisjover/Desktop/DataScientest/Projet températures terrestres/Streamlit/DF_PLOTLY.csv")
-    df_ml = pd.read_csv("/Users/alexisjover/Desktop/DataScientest/Projet températures terrestres/Streamlit/DF_ML_TEMP.csv")
+    regressor = load("/workspaces/Streamlit/Projet températures terrestres/Streamlit/Regression_lineaire_temp.joblib")
+    df_plotly = pd.read_csv("/workspaces/Streamlit/Projet températures terrestres/Streamlit/DF_PLOTLY.csv")
+    df_ml = pd.read_csv("/workspaces/Streamlit/Projet températures terrestres/Streamlit/DF_ML_TEMP.csv")
     df_ml = df_ml.drop("Unnamed: 0", axis = 1)
 
     y_pred2 = regressor.predict(df_ml)
@@ -723,9 +723,9 @@ if page == pages[3]:
     #------------------------------------------------------------
 
     #CO2 
-    regressor_co2 = load("/Users/alexisjover/Desktop/DataScientest/Projet températures terrestres/Streamlit/Regression_lineaire_co2.joblib")
-    df_plotly_co2 = pd.read_csv("/Users/alexisjover/Desktop/DataScientest/Projet températures terrestres/Streamlit/DF_PLOTLY_CO2")
-    df_ml_co2 = pd.read_csv("/Users/alexisjover/Desktop/DataScientest/Projet températures terrestres/Streamlit/DF_ML_CO2")
+    regressor_co2 = load("/workspaces/Streamlit/Projet températures terrestres/Streamlit/Regression_lineaire_co2.joblib")
+    df_plotly_co2 = pd.read_csv("/workspaces/Streamlit/Projet températures terrestres/Streamlit/DF_PLOTLY_CO2")
+    df_ml_co2 = pd.read_csv("/workspaces/Streamlit/Projet températures terrestres/Streamlit/DF_ML_CO2")
     df_ml_co2 = df_ml_co2.drop("Unnamed: 0", axis = 1)
     y_pred_co2 = regressor_co2.predict(df_ml_co2)   
 
@@ -811,7 +811,7 @@ if page == pages[3]:
 
         st.write("\n Résultats de nos premiers modèles :")
         with st.container(border=True):
-            st.image("/Users/alexisjover/Desktop/DataScientest/Projet températures terrestres/Streamlit/Resultats_1.png")
+            st.image("/workspaces/Streamlit/Projet températures terrestres/Streamlit/Resultats_1.png")
         st.write("""Les modèles ne semblent pas capables de prédire efficacement les températures avec le jeu de données à disposition. 
                 Cependant, il est à noter que ces coefficients sont bons sur les valeurs d'entrainement.
                 Dans un premier temps, nous avons attribué ce manque de précision à un jeu de données trop petit. 
@@ -821,11 +821,11 @@ if page == pages[3]:
         st.write("""Après avoir essayé une méthode peu concluante consistant à augmenter le nombre de lignes dans notre jeu de données puis appliquer
                 un bruit aux données, nous avons décidé d'essayer de focaliser nos modèles sur les paramètres importants :""")
         
-        st.image("/Users/alexisjover/Desktop/DataScientest/Projet températures terrestres/Streamlit/variables importantes.png")
+        st.image("/workspaces/Streamlit/Projet températures terrestres/Streamlit/variables importantes.png")
         st.divider()
         st.write("""Nous n'avons ainsi gardé que les variables "temperature_change_from_co2", "gas_co2", "population","cumulative_co2" et "gdp" et les résultats se sont révélés bien meilleurs : """)
         with st.container(border=True):
-            st.image("/Users/alexisjover/Desktop/DataScientest/Projet températures terrestres/Streamlit/Resultats_2.png")
+            st.image("/workspaces/Streamlit/Projet températures terrestres/Streamlit/Resultats_2.png")
         st.divider()
         st.write("""Enfin, nous pouvons mettre en forme nos résultats dans un graphique. Celui-ci représente la différence entre les valeurs observées et les valeurs réelles.
                 On remarque que, malgré que le modèle semble capable de prédire correctement les valeurs communes, il semble être bien 
@@ -849,18 +849,18 @@ if page == pages[3]:
         st.write("Comme pour les températures, nous avons souhaité observé la différence de performance des modèles après avoir selectionné les variables les plus importantes. Cependant, la différence étant insignifiante, nous avons choisi de garder toutes nos variables :")
         col1, col2 = st.columns(2)
         with col1:
-            st.image("/Users/alexisjover/Desktop/DataScientest/Projet températures terrestres/Streamlit/Resultats_1co2.png", 
+            st.image("/workspaces/Streamlit/Projet températures terrestres/Streamlit/Resultats_1co2.png", 
                     width = 800, 
                     caption = "Résultats de nos modèles avant sélection des variables les plus importantes")
-            st.image("/Users/alexisjover/Desktop/DataScientest/Projet températures terrestres/Streamlit/Metriques CO2.png", 
+            st.image("/workspaces/Streamlit/Projet températures terrestres/Streamlit/Metriques CO2.png", 
             width = 800, 
             caption = "Métriques pour nos modèles sans sélection des variables les plus importantes")
             
         with col2:
-            st.image("/Users/alexisjover/Desktop/DataScientest/Projet températures terrestres/Streamlit/Resultats_2co2.png", 
+            st.image("/workspaces/Streamlit/Projet températures terrestres/Streamlit/Resultats_2co2.png", 
                     width = 800, 
                     caption = "Résultats de nos modèles après sélection des variables les plus importantes")
-            st.image("/Users/alexisjover/Desktop/DataScientest/Projet températures terrestres/Streamlit/variables importantes co2.png", 
+            st.image("/workspaces/Streamlit/Projet températures terrestres/Streamlit/variables importantes co2.png", 
                     width = 800, 
                     caption = "Variables les plus importantes dans le modèle de régression linéaire")
         st.divider()
